@@ -1,0 +1,39 @@
+
+(function () {
+  function createCORSRequest(method, url) {
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr) {
+        xhr.open(method, url, true);
+      } else if (typeof XDomainRequest != "undefined") {
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+      } else {
+        xhr = null;
+      }
+      return xhr;
+    }
+
+    window.addEventListener('message', receiveMessage, false);
+    function receiveMessage(evt) {
+      const commentDiv = document.getElementById("ifragasatt-dn.epi.2413357");
+      if (evt.data.id === "ifragasatt-dn.epi.2413357" && commentDiv && commentDiv.firstChild) {
+        document.getElementById("ifragasatt-dn.epi.2413357").firstChild.style.height = evt.data.height;
+      }
+    }
+
+		var url = "https://comment.ifragasatt.se/comment";
+		var request = createCORSRequest("get", url);
+
+    if (request) {
+      request.onload = function (website) {
+        if (request.readyState === 4) {
+          if (request.status === 200) {
+            document.getElementById("ifragasatt-dn.epi.2413357").innerHTML = "<iframe scrolling='no' style='height:100%;margin:auto;width:100%;' frameborder='0' allowtransparency='true' src='https://comment.ifragasatt.se/comment?customerId=5&amp;articleId=dn.epi.2413357&amp;articleUrl=https://www.dn.se/nyheter/varlden/trump-utropar-asylseger-efter-beslut-i-hogsta-domstolen/&amp;articleTitle=Trump&#43;utropar&#43;asylseger&#43;efter&#43;beslut&#43;i&#43;H%C3%B6gsta&#43;domstolen&amp;commentsToShow=3&amp;articleDescription=H%C3%B6gsta&#43;domstolen&#43;i&#43;USA&#43;har&#43;gett&#43;presidenten&#43;r%C3%A4tt&#43;om&#43;en&#43;regel&#43;som&#43;inneb%C3%A4r&#43;att&#43;migranter&#43;inte&#43;kan&#43;s%C3%B6ka&#43;asyl&#43;vid&#43;gr%C3%A4nsen.&#43;Beslutet&#43;r%C3%B6r&#43;fr%C3%A4mst&#43;centralamerikanska&#43;personer.%26nbsp%3B&amp;articleImage=https://cached-images.bonnier.news/cms30/UploadedImages/2019/9/12/97501909-90aa-4aac-8bfb-8017e2938598/bigOriginal.jpg&amp;articlePublishedTime=2019-09-12T08:12:17.000&#43;02:00&amp;articleTags=dn.tag.usa%2Cdn.tag.donald-trump&amp;articleTitle=Trump&#43;utropar&#43;asylseger&#43;efter&#43;beslut&#43;i&#43;H%C3%B6gsta&#43;domstolen&amp;languageName=svenska&amp;languageShortName=sv'></iframe>";
+          } else {
+            console.error("Coud not create iFrame", request.statusText);
+          }      
+      } 
+    };
+    request.send();
+  }
+})();

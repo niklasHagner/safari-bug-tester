@@ -1,0 +1,39 @@
+
+(function () {
+  function createCORSRequest(method, url) {
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr) {
+        xhr.open(method, url, true);
+      } else if (typeof XDomainRequest != "undefined") {
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+      } else {
+        xhr = null;
+      }
+      return xhr;
+    }
+
+    window.addEventListener('message', receiveMessage, false);
+    function receiveMessage(evt) {
+      const commentDiv = document.getElementById("ifragasatt-dn.epi.2182473");
+      if (evt.data.id === "ifragasatt-dn.epi.2182473" && commentDiv && commentDiv.firstChild) {
+        document.getElementById("ifragasatt-dn.epi.2182473").firstChild.style.height = evt.data.height;
+      }
+    }
+
+		var url = "https://comment.ifragasatt.se/comment";
+		var request = createCORSRequest("get", url);
+
+    if (request) {
+      request.onload = function (website) {
+        if (request.readyState === 4) {
+          if (request.status === 200) {
+            document.getElementById("ifragasatt-dn.epi.2182473").innerHTML = "<iframe scrolling='no' style='height:100%;margin:auto;width:100%;' frameborder='0' allowtransparency='true' src='https://comment.ifragasatt.se/comment?customerId=5&amp;articleId=dn.epi.2182473&amp;articleUrl=https://www.dn.se/nyheter/varlden/domare-haver-trumps-asylstopp/&amp;articleTitle=Domare&#43;h%C3%A4ver&#43;Trumps&#43;asylstopp&amp;commentsToShow=3&amp;articleDescription=En&#43;domare&#43;i&#43;Kalifornien&#43;har&#43;tillf%C3%A4lligt&#43;stoppat&#43;Trumps&#43;presidentdekret&#43;som&#43;hindrade&#43;m%C3%A4nniskor&#43;fr%C3%A5n&#43;att&#43;s%C3%B6ka&#43;asyl&#43;om&#43;de&#43;tagit&#43;sig&#43;till&#43;USA&#43;olagligt.&#43;Stoppet&#43;b%C3%B6rjar&#43;g%C3%A4lla&#43;omedelbart&#43;och&#43;ska&#43;g%C3%A4lla&#43;%C3%B6ver&#43;hela&#43;landet.&amp;articleImage=https://cached-images.bonnier.news/cms30/UploadedImages/2018/11/20/53316a5c-7309-4579-b188-8d29a3d690b5/bigOriginal.jpg&amp;articlePublishedTime=2018-11-20T10:00:48.000&#43;01:00&amp;articleTags=dn.tag.migrantkaravanen%2Cdn.tag.mexiko%2Cdn.tag.trump%2Cdn.tag.usa&amp;articleTitle=Domare&#43;h%C3%A4ver&#43;Trumps&#43;asylstopp&amp;languageName=svenska&amp;languageShortName=sv'></iframe>";
+          } else {
+            console.error("Coud not create iFrame", request.statusText);
+          }      
+      } 
+    };
+    request.send();
+  }
+})();
